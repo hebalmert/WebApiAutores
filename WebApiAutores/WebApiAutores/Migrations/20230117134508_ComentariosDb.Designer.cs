@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiAutores;
 
@@ -11,9 +12,11 @@ using WebApiAutores;
 namespace WebApiAutores.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230117134508_ComentariosDb")]
+    partial class ComentariosDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,10 @@ namespace WebApiAutores.Migrations
                     b.Property<string>("Contenido")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LibroId")
+                    b.Property<int>("LibrioId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LibroId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -87,9 +93,7 @@ namespace WebApiAutores.Migrations
                 {
                     b.HasOne("WebApiAutores.Entidades.Libro", "Libro")
                         .WithMany("Comentarios")
-                        .HasForeignKey("LibroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LibroId");
 
                     b.Navigation("Libro");
                 });
